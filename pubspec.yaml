@@ -9,6 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.3
+  file_picker: ^8.0.0
+  open_filex: ^4.4.0
+  pdf_combine: ^2.1.0
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:
