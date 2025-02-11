@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf_combiner_demo/cubit/pdf_cubit.dart';
+import 'package:pdf_combiner_demo/repository/pdf_repository.dart';
+import 'package:pdf_combiner_demo/view/pdf_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,11 +13,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      title: 'PDF Combiner Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: BlocProvider(
+        create: (context) => PdfCubit(PdfRepository()),
+        child: PdfScreen(),
       ),
     );
   }
