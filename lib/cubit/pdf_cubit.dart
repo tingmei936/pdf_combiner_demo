@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf_combiner/responses/pdf_combiner_status.dart';
 import 'package:pdf_combiner_demo/repository/pdf_repository.dart';
 
@@ -7,14 +10,21 @@ class PdfCubit extends Cubit<String?> {
   final PdfRepository repository;
   PdfCubit(this.repository) : super(null);
 
+  Future<String> getOutputPath(String fileName) async {
+    final directory = await getTemporaryDirectory();
+    return '${directory.path}/$fileName';
+  }
+
   Future<void> mergePdfs() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true, type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null) {
-      String outputPath = "/path/to/output/merged.pdf";
+      String outputPath = await getOutputPath("merged.pdf");
       var response = await repository.mergePDFs(
           result.paths.whereType<String>().toList(), outputPath);
-      if (response.status == PdfCombinerStatus.success) emit(response.response);
+      if (response.status == PdfCombinerStatus.success) {
+        emit(response.response);
+      }
     }
   }
 
@@ -22,10 +32,12 @@ class PdfCubit extends Cubit<String?> {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(allowMultiple: true, type: FileType.image);
     if (result != null) {
-      String outputPath = "/path/to/output/images.pdf";
+      String outputPath = await getOutputPath("images.pdf");
       var response = await repository.createPdfFromImages(
           result.paths.whereType<String>().toList(), outputPath);
-      if (response.status == PdfCombinerStatus.success) emit(response.response);
+      if (response.status == PdfCombinerStatus.success) {
+        emit(response.response);
+      }
     }
   }
 
@@ -33,7 +45,8 @@ class PdfCubit extends Cubit<String?> {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null && result.files.isNotEmpty) {
-      String outputPath = "/path/to/output/images/";
+      String outputPath = await getOutputPath("extracted_images/");
+      Directory(outputPath).createSync(recursive: true);
       var response = await repository.extractImagesFromPdf(
           result.files.first.path!, outputPath);
       if (response.status == PdfCombinerStatus.success) {
