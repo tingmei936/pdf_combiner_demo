@@ -5,6 +5,7 @@ import 'package:pdf_combiner_demo/repository/pdf_repository.dart';
 import 'package:pdf_combiner_demo/view/pdf_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 

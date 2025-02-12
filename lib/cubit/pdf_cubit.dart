@@ -45,7 +45,7 @@ class PdfCubit extends Cubit<String?> {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null && result.files.isNotEmpty) {
-      String outputPath = await getOutputPath("extracted_images/");
+      String outputPath = await getOutputPath("extracted_images");
       Directory(outputPath).createSync(recursive: true);
       var response = await repository.extractImagesFromPdf(
           result.files.first.path!, outputPath);

@@ -23,10 +23,9 @@ class PdfRepository {
   Future<ImageFromPDFResponse> extractImagesFromPdf(
       String pdfPath, String outputPath) async {
     return await PdfCombiner.createImageFromPDF(
-        inputPath: pdfPath,
-        outputPath: outputPath,
-        maxWidth: 720,
-        maxHeight: 1080,
-        createOneImage: false);
+      inputPath: pdfPath,
+      outputPath: outputPath,
+      createOneImage: false,
+    );
   }
 }
