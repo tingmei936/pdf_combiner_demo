@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:open_app_file/open_app_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_combiner/responses/pdf_combiner_status.dart';
 import 'package:pdf_combiner_demo/repository/pdf_repository.dart';
@@ -25,6 +26,7 @@ class PdfCubit extends Cubit<String?> {
           result.paths.whereType<String>().toList(), outputPath);
       if (response.status == PdfCombinerStatus.success) {
         emit(response.response);
+        OpenAppFile.open(response.response!);
       }
     }
   }
@@ -46,6 +48,7 @@ class PdfCubit extends Cubit<String?> {
     var response = await repository.createPdfFromImages(imagePaths, outputPath);
     if (response.status == PdfCombinerStatus.success) {
       emit(response.response);
+      OpenAppFile.open(response.response!);
     } else {
       print("Error al crear PDF: ${response.status}");
     }
@@ -62,6 +65,7 @@ class PdfCubit extends Cubit<String?> {
             result.files.first.path!, outputPath);
         if (response.status == PdfCombinerStatus.success) {
           emit(response.response?.join("\n"));
+          OpenAppFile.open(outputPath);
         }
       }
     } catch (e) {
