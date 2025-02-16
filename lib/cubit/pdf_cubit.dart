@@ -52,16 +52,20 @@ class PdfCubit extends Cubit<String?> {
   }
 
   Future<void> extractImagesFromPdf() async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
-    if (result != null && result.files.isNotEmpty) {
-      String outputPath = await getOutputPath("extracted_images");
-      Directory(outputPath).createSync(recursive: true);
-      var response = await repository.extractImagesFromPdf(
-          result.files.first.path!, outputPath);
-      if (response.status == PdfCombinerStatus.success) {
-        emit(response.response?.join("\n"));
+    try {
+      FilePickerResult? result = await FilePicker.platform
+          .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+      if (result != null && result.files.isNotEmpty) {
+        String outputPath = await getOutputPath("extracted_images");
+        Directory(outputPath).createSync(recursive: true);
+        var response = await repository.extractImagesFromPdf(
+            result.files.first.path!, outputPath);
+        if (response.status == PdfCombinerStatus.success) {
+          emit(response.response?.join("\n"));
+        }
       }
+    } catch (e) {
+      print('error ; $e');
     }
   }
 }

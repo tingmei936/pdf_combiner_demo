@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSDocumentsDirectoryUsageDescription</key>
+	<string>Necesitamos acceso a documentos para procesar archivos PDF.</string>
+	<key>NSDownloadsDirectoryUsageDescription</key>
+	<string>Necesitamos acceso a descargas para procesar archivos PDF.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Necesitamos acceso a la galería para guardar imágenes.</string>
 </dict>
 </plist>
