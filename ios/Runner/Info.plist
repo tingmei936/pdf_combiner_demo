@@ -51,5 +51,7 @@
 	<string>Necesitamos acceso a descargas para procesar archivos PDF.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Necesitamos acceso a la galería para guardar imágenes.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Necesitamos acceso para guardar imágenes extraídas de PDFs.</string>
 </dict>
 </plist>
